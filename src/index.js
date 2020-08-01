@@ -8,7 +8,7 @@ import {  BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import CadastroVideo from './pages/cadastro/Video';
 import CadastroCategoria from './pages/cadastro/Categoria';
 
-const Pagina404 = () => (<div>Página 404</div>)
+  const Pagina404 = () => (<div>Página 404</div>)
 
 //switch faz a lógica pra saber a página atual e o route renderiza o conteúdo (da url referida)
 ReactDOM.render(
