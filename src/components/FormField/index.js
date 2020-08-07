@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'; //tirar
 import styled, { css } from 'styled-components';
 
 const FormFieldWrapper = styled.div`
@@ -74,7 +75,7 @@ const Input = styled.input`
 `;
 
 //recebendo o values do <FormField value={values.nome} />
-function FormField({ labelLP, type, name, value, onChange }){
+function FormField({ labelLP, type, name, value, onChange, suggestions, }){
     const isTextArea = type === "textarea";
     const tag = isTextArea ? "textarea" : "input";
     const hasValue = Boolean(value.length);
@@ -93,7 +94,14 @@ function FormField({ labelLP, type, name, value, onChange }){
                     />
                     <Label.Text>
                         {labelLP}
+                        :
                     </Label.Text>
+
+                    <datalist>
+                      <option value="">
+
+                      </option>
+                    </datalist>
                
             </Label>
         </FormFieldWrapper>
@@ -101,6 +109,25 @@ function FormField({ labelLP, type, name, value, onChange }){
     )
 
 }
+
+/*
+FormField.defaultProps = {
+  type: 'text',
+  value: '',
+  onChangeHandler: () => {},
+  suggestions: [],
+};
+
+FormField.propTypes = {
+  id: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  labelLP: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  onChangeHandler: PropTypes.func,
+  suggestions: PropTypes.arrayOf(PropTypes.string),
+};
+*/
+
 
 export default FormField;
 

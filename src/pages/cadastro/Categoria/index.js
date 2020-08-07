@@ -3,6 +3,7 @@ import PageDefault from '../../../components/PageDefault';
 import { Link } from 'react-router-dom';
 import FormField from '../../../components/FormField';
 import Button from '../../../components/Button';
+import useForm from '../../../hooks/useForm';
 
 
 function CadastroCategoria(){
@@ -11,30 +12,20 @@ function CadastroCategoria(){
         descricao: '',
         cor: '#d7007e',
     }
+
+    const { handleChange, valoresDoForm, clearForm  }= useForm(valoresIniciais)
+
     const [categorias, setCategorias] = useState([]) 
-    //p1nome do array p2 set usa pra mudar o nome 
-    const [valoresDoForm, setValoresDoForm] = useState(valoresIniciais);
+    
 
 
-    //p1 nome do campo que esta recebendo p2 valor do campo
-    function setValue(chave, valor){
-        setValoresDoForm({
-            ...valoresDoForm,
-            [chave]: valor, //o nome e o valor que veio do input (entre [] pq os valores recebidos são dinâmicos)
-        })
-    }
-
-    function handleChange(info){  
-        const { getAttribute, value } = info.target                              
-        setValue(
-            info.target.getAttribute('name'), 
-            info.target.value)
-    } 
-//como e fosse um efeito colateral
+    //como e fosse um efeito colateral
     useEffect(() =>{
-        console.log('vrau') //o que é pra acontecer
-
-        const URL_TOP = 'http://localhost:3000/categoria'
+       // console.log('vrau') //o que é pra acontecer
+//https://appreactnetflix.herokuapp.com/categoria
+        const URL_TOP = window.location.hostname.includes('localhost')
+        ? 'http://localhost:8080/categorias'
+        : 'https://appreactnetflix.herokuapp.com/categorias' 
         fetch(URL_TOP)
             .then(async (respostaDoServidor) => {
                 const resposta = await respostaDoServidor.json();
@@ -64,16 +55,16 @@ function CadastroCategoria(){
         <PageDefault>
            <h1>Cadastro de Categoria: {valoresDoForm.nome}</h1>
 
-           <form onSubmit={function handleSubmit(infosDoEvento){
+           <form onSubmit={function handleSubmit(info){
                //para tirar o submit padrão e não fazer o reload
-               infosDoEvento.preventDefault()
+               info.preventDefault()
               
         //(...categorias) pegando o que já tem e depois (nomeDaCategoria) colocando no final o novo nome
                setCategorias([
                    ...categorias,
                    valoresDoForm
                ])
-               setValoresDoForm(valoresIniciais)
+               clearForm(valoresIniciais)
            }}>
                {/**enviando os valores para camponentes->formField->index.js */}
                <FormField 
@@ -115,10 +106,10 @@ function CadastroCategoria(){
 
            <ul>
                {/** p1 percorrer a categoria p2 indice de cada uma pra não dar erros*/}
-               {categorias.map((categoria, indice) => {
+               {categorias.map((categoria) => {
                    return (
-                       <li key={`${categoria}${indice}`}> 
-                           {categoria.nome}
+                       <li key={`${categoria.id}`}> 
+                           {categoria.titulo}
                        </li>
                    )
                })}

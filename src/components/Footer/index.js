@@ -1,16 +1,18 @@
 import React from 'react';
 import { FooterBase } from './styles';
 
+import lilia from '../../assets/img/lilia_paula_neiva.png'
+
 function Footer() {
   return (
     <FooterBase>
       <a href="https://www.alura.com.br/">
-        <img src="https://www.alura.com.br/assets/img/alura-logo-white.1570550707.svg" alt="Logo Alura" />
+        <img src={lilia} alt="Logo Lp" />
       </a>
       <p>
         Orgulhosamente criado durante a
         {' '}
-        <a href="https://www.alura.com.br/">
+        <a href="#">
           Imersão React da Alura
         </a>
       </p>
